@@ -5,6 +5,8 @@ import static io.restassured.RestAssured.*;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
+import org.apache.http.HttpStatus;
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.net.URI;
@@ -29,5 +31,24 @@ public class TestGet {
         //URI uri = new URI("http://localhost:8091/maps/api/directions/lotto");
         //Response response = when().get(new URI("http://localhost:8091/maps/api/directions/lotto"));
         System.out.println(response.asString());
+    }
+
+    @Test
+    public void testStatusCode() throws URISyntaxException {
+
+        /*
+         * Given Accept the response in JSON format
+         * When I perform the GET request
+         * THen Status code 200 OK should be returned
+         */
+
+        int code = given()
+                .accept(ContentType.JSON)
+                .when()
+                .get(new URI("http://localhost:8091/maps/api/directions/lotto"))
+                .thenReturn()
+                .statusCode();
+        System.out.println(code);
+        Assert.assertEquals(HttpStatus.SC_OK,code);
     }
 }
